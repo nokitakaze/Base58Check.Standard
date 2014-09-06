@@ -5,6 +5,8 @@ Base58Check is a C# implementation of [Base58 Checked Encoding](https://en.bitco
 
 In short, Base58 is a encoding algorithm similar to Base64, removing certain characters that cause issues with URLs, and cause confusion because of how similar they look in certain fonts. Base58Check adds a 4 byte checksum to validate that the data hasn't been altered in transmission. This checksum isn't suitable to perform cryptographic validation, but is does detect accidental corruption.
 
+Want to support development? Consider donating via Bitcoin to `14jumFDmuVkLiAt4TgyKt17SWHtPRbkcLr` - all donations, no matter how small are appreciated.
+
 ## Installation
 
 *[NuGet details coming soon...]*
