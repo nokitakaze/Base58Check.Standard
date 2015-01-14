@@ -9,7 +9,7 @@ Want to support development? Consider donating via Bitcoin to `14jumFDmuVkLiAt4T
 
 ## Installation
 
-*[NuGet details coming soon...]*
+[NuGet Package](https://www.nuget.org/packages/Base58Check/)
 
 ## Public Interface
 
