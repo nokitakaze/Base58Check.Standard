@@ -22,6 +22,6 @@ The `Encode*` methods both expect a byte array of arbitrary length; as the entir
 
 ## License
 
-This software is released under the MIT license.
+This software is released to the public domain.
 
 See LICENSE for more information.
