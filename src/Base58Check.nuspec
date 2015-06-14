@@ -8,7 +8,7 @@
         <projectUrl>https://github.com/adamcaudill/Base58Check</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Base58Check is a C# implementation of Base58 Checked Encoding</description>
-        <copyright>Copyright (c) 2014 Adam Caudill</copyright>
+        <copyright>Public Domain</copyright>
         <language>en-US</language>
         <tags>Base58 Bitcoin "Checked Encoding"</tags>
     </metadata>
