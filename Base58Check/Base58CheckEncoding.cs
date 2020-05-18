@@ -3,7 +3,7 @@ using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
 
-namespace Base58Check
+namespace NokitaKaze.Base58Check
 {
   /// <summary>
   /// Base58Check Encoding / Decoding (Bitcoin-style)

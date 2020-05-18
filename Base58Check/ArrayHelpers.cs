@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Base58Check
+namespace NokitaKaze.Base58Check
 {
   internal class ArrayHelpers
   {

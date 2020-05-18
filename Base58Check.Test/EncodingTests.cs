@@ -1,8 +1,8 @@
 ﻿using System;
-using Base58Check;
+using NokitaKaze.Base58Check;
 using NUnit.Framework;
 
-namespace Tests
+namespace NokitaKaze.Tests
 {
   public class EncodingTests
   {
