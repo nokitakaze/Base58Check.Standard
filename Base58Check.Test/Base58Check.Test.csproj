@@ -7,6 +7,10 @@
     <LangVersion>default</LangVersion>
 
     <TargetFrameworks>netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
+
+    <AssemblyName>NokitaKaze.Base58Check.Test</AssemblyName>
+
+    <RootNamespace>NokitaKaze.Base58Check.Test</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
