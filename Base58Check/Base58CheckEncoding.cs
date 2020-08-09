@@ -22,7 +22,7 @@ namespace NokitaKaze.Base58Check
         public const string ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
         public static readonly BigInteger Base58BI = new BigInteger(58);
-        private static readonly BigInteger[] Numbers;
+        // private static readonly BigInteger[] Numbers;
 
         private static readonly Dictionary<Base58DataType, IReadOnlyCollection<byte>> DataPrefixes =
             new Dictionary<Base58DataType, IReadOnlyCollection<byte>>()
@@ -42,12 +42,20 @@ namespace NokitaKaze.Base58Check
                 {Base58DataType.BIP32_PRIVATE_KEY_TESTNET, new byte[] {0x04, 0x35, 0x83, 0x94}},
             };
 
+        private static readonly IReadOnlyDictionary<char, int> ALPHABET_DIC;
+
         static Base58CheckEncoding()
         {
+            /*
             Numbers = Enumerable
                 .Range(0, 58)
                 .Select(t => new BigInteger(t))
                 .ToArray();
+            */
+
+            ALPHABET_DIC = Enumerable
+                .Range(0, ALPHABET.Length)
+                .ToDictionary(t => ALPHABET[t], t => t);
         }
 
         #region Plain
@@ -97,41 +105,43 @@ namespace NokitaKaze.Base58Check
             BigInteger result;
             {
                 result = BigInteger.Zero;
-                var offset = BigInteger.One;
 
-                var reversedBytes = Enumerable
-                    .Range(0, data.Length)
-                    .Select(t => data.Substring(t, 1))
-                    .Reverse()
-                    .ToArray();
-
-                foreach (var c in reversedBytes)
+                foreach (var c in data)
                 {
-                    var digit = ALPHABET.IndexOf(c, StringComparison.Ordinal);
+                    var digit = ALPHABET_DIC.ContainsKey(c) ? ALPHABET_DIC[c] : -1;
                     if (digit == -1)
                     {
                         throw new FormatException(string.Format("Invalid Base58 character `{0}`", c));
                     }
 
-                    result += Numbers[digit] * offset;
-                    offset *= Base58BI;
+                    result = result * Base58BI + digit;
                 }
             }
 
-            var prefixZeroCount = data
-                .TakeWhile(c => c == '1')
-                .Count();
+            // Faster than TakeWhile
+            int prefixZeroCount;
+            for (prefixZeroCount = 0;
+                (prefixZeroCount < data.Length) && (data[prefixZeroCount] == '1');
+                prefixZeroCount++)
+            {
+            }
 
-            var withoutPrefix = result
+            var resultReversed = result
                 .ToByteArray()
                 .Reverse()
-                .SkipWhile(t => t == 0)
                 .ToArray();
+            int firstNonZero;
+            for (firstNonZero = 0;
+                (firstNonZero < resultReversed.Length) && (resultReversed[firstNonZero] == 0);
+                firstNonZero++)
+            {
+            }
 
-            return Enumerable
-                .Repeat((byte) 0, prefixZeroCount)
-                .Concat(withoutPrefix)
-                .ToArray();
+            var revValueLength = resultReversed.Length - firstNonZero;
+            var realOutput = new byte[prefixZeroCount + revValueLength];
+            Array.Copy(resultReversed, firstNonZero, realOutput, prefixZeroCount, revValueLength);
+
+            return realOutput;
         }
 
         #endregion
