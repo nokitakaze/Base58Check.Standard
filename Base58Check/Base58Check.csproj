@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <PackageVersion>0.4.0</PackageVersion>
+    <PackageVersion>0.4.1</PackageVersion>
     <PackageId>NokitaKaze.Base58Check</PackageId>
     <LangVersion>8</LangVersion>
     <Authors>nokitakaze</Authors>
@@ -12,7 +12,7 @@
     <PackageTags>Base58,Bitcoin</PackageTags>
     <RepositoryUrl>https://github.com/nokitakaze/Base58Check</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Rewritten from scratch</PackageReleaseNotes>
+    <PackageReleaseNotes>Additional methods</PackageReleaseNotes>
 	  <Product>NokitaKaze.Base58Check</Product>
     <AssemblyName>NokitaKaze.Base58Check</AssemblyName>
     <RootNamespace>NokitaKaze.Base58Check</RootNamespace>

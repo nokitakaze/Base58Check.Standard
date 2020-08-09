@@ -24,6 +24,24 @@ namespace NokitaKaze.Base58Check
         public static readonly BigInteger Base58BI = new BigInteger(58);
         private static readonly BigInteger[] Numbers;
 
+        private static readonly Dictionary<Base58DataType, IReadOnlyCollection<byte>> DataPrefixes =
+            new Dictionary<Base58DataType, IReadOnlyCollection<byte>>()
+            {
+                // Main network
+                {Base58DataType.P2PKH, new byte[] {0x00}},
+                {Base58DataType.P2SH, new byte[] {0x05}},
+                {Base58DataType.PRIVATE_KEY_WIF, new byte[] {0x80}},
+                {Base58DataType.BIP32_PUBLIC_KEY, new byte[] {0x04, 0x88, 0xB2, 0x1E}},
+                {Base58DataType.BIP32_PRIVATE_KEY, new byte[] {0x04, 0x88, 0xAD, 0xE4}},
+
+                // Test network
+                {Base58DataType.P2PKH_TESTNET, new byte[] {0x6F}},
+                {Base58DataType.P2SH_TESTNET, new byte[] {0xC4}},
+                {Base58DataType.PRIVATE_KEY_WIF_TESTNET, new byte[] {0xEF}},
+                {Base58DataType.BIP32_PUBLIC_KEY_TESTNET, new byte[] {0x04, 0x35, 0x87, 0xCF}},
+                {Base58DataType.BIP32_PRIVATE_KEY_TESTNET, new byte[] {0x04, 0x35, 0x83, 0x94}},
+            };
+
         static Base58CheckEncoding()
         {
             Numbers = Enumerable
@@ -31,6 +49,8 @@ namespace NokitaKaze.Base58Check
                 .Select(t => new BigInteger(t))
                 .ToArray();
         }
+
+        #region Plain
 
         /// <summary>
         /// Encodes data in plain Base58, without any checksum
@@ -114,6 +134,10 @@ namespace NokitaKaze.Base58Check
                 .ToArray();
         }
 
+        #endregion
+
+        #region Main Encoding
+
         /// <summary>
         /// Encodes data with a 4-byte checksum
         /// </summary>
@@ -129,7 +153,7 @@ namespace NokitaKaze.Base58Check
         /// <summary>
         /// Decodes data in Base58Check format (with 4 byte checksum)
         /// </summary>
-        /// <param name="data">Data to be decoded</param>
+        /// <param name="data">Data to be decoded (without prefix)</param>
         /// <returns>Returns decoded data if valid; throws FormatException if invalid</returns>
         public static byte[] Decode(string data)
         {
@@ -155,5 +179,41 @@ namespace NokitaKaze.Base58Check
 
             return hash2.Take(CHECK_SUM_SIZE).ToArray();
         }
+
+        #endregion
+
+        #region Base58 types
+
+        public static string EncodeType(ICollection<byte> data, Base58DataType base58DataType = Base58DataType.P2PKH)
+        {
+            if (base58DataType == Base58DataType.UNKNOWN)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            var fullData = DataPrefixes[base58DataType]
+                .Concat(data)
+                .ToArray();
+
+            return Encode(fullData);
+        }
+
+        public static byte[] DecodeIntoType(string data, out Base58DataType base58DataType)
+        {
+            var decodedData = Decode(data);
+            foreach (var pair in DataPrefixes
+                .Where(pair => pair.Value.Count <= decodedData.Length)
+                .Where(pair => pair.Value.Select((v, index) => decodedData[index] == v).All(t => t))
+            )
+            {
+                base58DataType = pair.Key;
+                return decodedData.Skip(pair.Value.Count).ToArray();
+            }
+
+            base58DataType = Base58DataType.UNKNOWN;
+            return decodedData;
+        }
+
+        #endregion
     }
 }
