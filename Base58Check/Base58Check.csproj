@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <PackageVersion>0.4.0</PackageVersion>
+    <PackageId>NokitaKaze.Base58Check</PackageId>
+    <LangVersion>8</LangVersion>
+    <Authors>nokitakaze</Authors>
+    <PackageLicenseUrl>https://github.com/nokitakaze/Base58Check.Standard/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/nokitakaze/Base58Check.Standard</PackageProjectUrl>
+    <Description>Base58Check is a C# implementation of Base58 Checked Encoding</Description>
+    <PackageTags>Base58,Bitcoin</PackageTags>
+    <RepositoryUrl>https://github.com/nokitakaze/Base58Check</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>Rewritten from scratch</PackageReleaseNotes>
+	<Product>NokitaKaze.Base58Check</Product>
+    <AssemblyName>NokitaKaze.Base58Check</AssemblyName>
+    <RootNamespace>NokitaKaze.Base58Check</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+</Project>
