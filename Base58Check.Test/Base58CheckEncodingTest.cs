@@ -225,5 +225,45 @@ namespace NokitaKaze.Base58Check.Test
         {
             Assert.Throws<FormatException>(() => Base58CheckEncoding.Decode("16UwLl9Risc3QfPqBUvKofHmBQ7wMtjvM"));
         }
+
+        public static IEnumerable<object[]> EncodeTypeTestData()
+        {
+            // ReSharper disable once UseObjectOrCollectionInitializer
+            var result = new List<(string, Base58DataType)>();
+            result.Add(("1BitcoinEaterAddressDontSendf59kuE", Base58DataType.P2PKH));
+            result.Add(("3Cbq7aT1tY8kMxWLbitaG7yT6bPbKChq64", Base58DataType.P2SH));
+            result.Add((
+                "xpub661MyMwAqRbcEYS8w7XLSVeEsBXy79zSzH1J8vCdxAZningWLdN3zgtU6LBpB85b3D2yc8sfvZU521AAwdZafEz7mnzBBsz4wKY5e4cp9LB",
+                Base58DataType.BIP32_PUBLIC_KEY));
+            result.Add((
+                "xprv9s21ZrQH143K24Mfq5zL5MhWK9hUhhGbd45hLXo2Pq2oqzMMo63oStZzF93Y5wvzdUayhgkkFoicQZcP3y52uPPxFnfoLZB21Teqt1VvEHx",
+                Base58DataType.BIP32_PRIVATE_KEY));
+            result.Add((
+                "zmk8tQY",
+                Base58DataType.UNKNOWN));
+
+            return result
+                .Select(t => new object[] {t.Item1, t.Item2})
+                .ToArray();
+        }
+
+        [Theory]
+        [MemberData(nameof(EncodeTypeTestData))]
+        public void EncodeTypeTest(string data, Base58DataType expectedBase58DataType)
+        {
+            var decodedData = Base58CheckEncoding.DecodeIntoType(data, out var actualDataType);
+
+            Assert.Equal(expectedBase58DataType, actualDataType);
+            if (expectedBase58DataType != Base58DataType.UNKNOWN)
+            {
+                var reEncodedData = Base58CheckEncoding.EncodeType(decodedData, actualDataType);
+                Assert.Equal(data, reEncodedData);
+            }
+            else
+            {
+                Assert.Throws<ArgumentOutOfRangeException>(() =>
+                    Base58CheckEncoding.EncodeType(decodedData, Base58DataType.UNKNOWN));
+            }
+        }
     }
 }
