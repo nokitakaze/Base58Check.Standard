@@ -42,12 +42,23 @@ namespace NokitaKaze.Base58Check
                 {Base58DataType.BIP32_PRIVATE_KEY_TESTNET, new byte[] {0x04, 0x35, 0x83, 0x94}},
             };
 
+        private static readonly IReadOnlyDictionary<char, int> ALPHABET_DIC;
+        private static readonly IReadOnlyDictionary<char, BigInteger> NumbersDic;
+
         static Base58CheckEncoding()
         {
             Numbers = Enumerable
                 .Range(0, 58)
                 .Select(t => new BigInteger(t))
                 .ToArray();
+
+            ALPHABET_DIC = Enumerable
+                .Range(0, ALPHABET.Length)
+                .ToDictionary(t => ALPHABET[t], t => t);
+
+            NumbersDic = Enumerable
+                .Range(0, 58)
+                .ToDictionary(t => ALPHABET[t], t => new BigInteger(t));
         }
 
         #region Plain
@@ -133,6 +144,401 @@ namespace NokitaKaze.Base58Check
                 .Concat(withoutPrefix)
                 .ToArray();
         }
+
+        #region add
+
+        /// <summary>
+        /// Decodes data in plain Base58, without any checksum.
+        /// </summary>
+        /// <param name="data">Data to be decoded</param>
+        /// <returns>Returns decoded data if valid; throws FormatException if invalid</returns>
+        public static byte[] DecodePlain1(string data)
+        {
+            BigInteger result;
+            {
+                result = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                var reversedBytes = Enumerable
+                    .Range(0, data.Length)
+                    .Select(t => data[t])
+                    .Reverse()
+                    .ToArray();
+
+                foreach (var c in reversedBytes)
+                {
+                    var digit = ALPHABET.IndexOf(c);
+                    if (digit == -1)
+                    {
+                        throw new FormatException(string.Format("Invalid Base58 character `{0}`", c));
+                    }
+
+                    result += Numbers[digit] * offset;
+                    offset *= Base58BI;
+                }
+            }
+
+            var prefixZeroCount = data
+                .TakeWhile(c => c == '1')
+                .Count();
+
+            var withoutPrefix = result
+                .ToByteArray()
+                .Reverse()
+                .SkipWhile(t => t == 0)
+                .ToArray();
+
+            return Enumerable
+                .Repeat((byte) 0, prefixZeroCount)
+                .Concat(withoutPrefix)
+                .ToArray();
+        }
+
+        /// <summary>
+        /// Decodes data in plain Base58, without any checksum.
+        /// </summary>
+        /// <param name="data">Data to be decoded</param>
+        /// <returns>Returns decoded data if valid; throws FormatException if invalid</returns>
+        public static byte[] DecodePlain2(string data)
+        {
+            BigInteger result;
+            {
+                result = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                var reversedBytes = Enumerable
+                    .Range(0, data.Length)
+                    .Select(t => data[t])
+                    .Reverse();
+
+                foreach (var c in reversedBytes)
+                {
+                    var digit = ALPHABET.IndexOf(c);
+                    if (digit == -1)
+                    {
+                        throw new FormatException(string.Format("Invalid Base58 character `{0}`", c));
+                    }
+
+                    result += Numbers[digit] * offset;
+                    offset *= Base58BI;
+                }
+            }
+
+            var prefixZeroCount = data
+                .TakeWhile(c => c == '1')
+                .Count();
+
+            var withoutPrefix = result
+                .ToByteArray()
+                .Reverse()
+                .SkipWhile(t => t == 0);
+
+            return Enumerable
+                .Repeat((byte) 0, prefixZeroCount)
+                .Concat(withoutPrefix)
+                .ToArray();
+        }
+
+        /// <summary>
+        /// Decodes data in plain Base58, without any checksum.
+        /// </summary>
+        /// <param name="data">Data to be decoded</param>
+        /// <returns>Returns decoded data if valid; throws FormatException if invalid</returns>
+        public static byte[] DecodePlain4(string data)
+        {
+            BigInteger result;
+            {
+                result = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                var reversedBytes = Enumerable
+                    .Range(0, data.Length)
+                    .Select(t => data[t])
+                    .Reverse();
+
+                foreach (var c in reversedBytes)
+                {
+                    var digit = ALPHABET_DIC.ContainsKey(c) ? ALPHABET_DIC[c] : -1;
+                    if (digit == -1)
+                    {
+                        throw new FormatException(string.Format("Invalid Base58 character `{0}`", c));
+                    }
+
+                    result += digit * offset;
+                    offset *= Base58BI;
+                }
+            }
+
+            var prefixZeroCount = data
+                .TakeWhile(c => c == '1')
+                .Count();
+
+            var withoutPrefix = result
+                .ToByteArray()
+                .Reverse()
+                .SkipWhile(t => t == 0);
+
+            return Enumerable
+                .Repeat((byte) 0, prefixZeroCount)
+                .Concat(withoutPrefix)
+                .ToArray();
+        }
+
+        /// <summary>
+        /// Decodes data in plain Base58, without any checksum.
+        /// </summary>
+        /// <param name="data">Data to be decoded</param>
+        /// <returns>Returns decoded data if valid; throws FormatException if invalid</returns>
+        public static byte[] DecodePlain5(string data)
+        {
+            BigInteger result;
+            {
+                result = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                for (int i = data.Length - 1; i >= 0; i--)
+                {
+                    var c = data[i];
+                    var digit = ALPHABET_DIC.ContainsKey(c) ? ALPHABET_DIC[c] : -1;
+                    if (digit == -1)
+                    {
+                        throw new FormatException(string.Format("Invalid Base58 character `{0}`", c));
+                    }
+
+                    result += digit * offset;
+                    offset *= Base58BI;
+                }
+            }
+
+            var prefixZeroCount = data
+                .TakeWhile(c => c == '1')
+                .Count();
+
+            var withoutPrefix = result
+                .ToByteArray()
+                .Reverse()
+                .SkipWhile(t => t == 0);
+
+            return Enumerable
+                .Repeat((byte) 0, prefixZeroCount)
+                .Concat(withoutPrefix)
+                .ToArray();
+        }
+
+        /// <summary>
+        /// Decodes data in plain Base58, without any checksum.
+        /// </summary>
+        /// <param name="data">Data to be decoded</param>
+        /// <returns>Returns decoded data if valid; throws FormatException if invalid</returns>
+        public static byte[] DecodePlain6(string data)
+        {
+            BigInteger result;
+            {
+                result = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                for (int i = data.Length - 1; i >= 0; i--)
+                {
+                    var c = data[i];
+                    var digit = ALPHABET_DIC.ContainsKey(c) ? ALPHABET_DIC[c] : -1;
+                    if (digit == -1)
+                    {
+                        throw new FormatException(string.Format("Invalid Base58 character `{0}`", c));
+                    }
+
+                    result += digit * offset;
+                    offset *= Base58BI;
+                }
+            }
+
+            var prefixZeroCount = data
+                .TakeWhile(c => c == '1')
+                .Count();
+
+            var withoutPrefix = result
+                .ToByteArray()
+                .Reverse()
+                .SkipWhile(t => t == 0)
+                .ToArray();
+
+            var realOutput = new byte[prefixZeroCount + withoutPrefix.Length];
+            Array.Copy(withoutPrefix, 0, realOutput, prefixZeroCount, withoutPrefix.Length);
+
+            return realOutput;
+        }
+
+        /// <summary>
+        /// Decodes data in plain Base58, without any checksum.
+        /// </summary>
+        /// <param name="data">Data to be decoded</param>
+        /// <returns>Returns decoded data if valid; throws FormatException if invalid</returns>
+        public static byte[] DecodePlain7(string data)
+        {
+            BigInteger result;
+            {
+                result = BigInteger.Zero;
+
+                foreach (var c in data)
+                {
+                    var digit = ALPHABET_DIC.ContainsKey(c) ? ALPHABET_DIC[c] : -1;
+                    if (digit == -1)
+                    {
+                        throw new FormatException(string.Format("Invalid Base58 character `{0}`", c));
+                    }
+
+                    result = result * Base58BI + digit;
+                }
+            }
+
+            var prefixZeroCount = data
+                .TakeWhile(c => c == '1')
+                .Count();
+
+            var withoutPrefix = result
+                .ToByteArray()
+                .Reverse()
+                .SkipWhile(t => t == 0)
+                .ToArray();
+
+            var realOutput = new byte[prefixZeroCount + withoutPrefix.Length];
+            Array.Copy(withoutPrefix, 0, realOutput, prefixZeroCount, withoutPrefix.Length);
+
+            return realOutput;
+        }
+
+        /// <summary>
+        /// Decodes data in plain Base58, without any checksum.
+        /// </summary>
+        /// <param name="data">Data to be decoded</param>
+        /// <returns>Returns decoded data if valid; throws FormatException if invalid</returns>
+        public static byte[] DecodePlain8(string data)
+        {
+            BigInteger result;
+            {
+                result = BigInteger.Zero;
+
+                foreach (var c in data)
+                {
+                    var digit = ALPHABET_DIC.ContainsKey(c) ? ALPHABET_DIC[c] : -1;
+                    if (digit == -1)
+                    {
+                        throw new FormatException(string.Format("Invalid Base58 character `{0}`", c));
+                    }
+
+                    result = result * Base58BI + digit;
+                }
+            }
+
+            // Faster than TakeWhile
+            int prefixZeroCount;
+            for (prefixZeroCount = 0;
+                (prefixZeroCount < data.Length) && (data[prefixZeroCount] == '1');
+                prefixZeroCount++)
+            {
+            }
+
+            var withoutPrefix = result
+                .ToByteArray()
+                .Reverse()
+                .SkipWhile(t => t == 0)
+                .ToArray();
+
+            var realOutput = new byte[prefixZeroCount + withoutPrefix.Length];
+            Array.Copy(withoutPrefix, 0, realOutput, prefixZeroCount, withoutPrefix.Length);
+
+            return realOutput;
+        }
+
+        /// <summary>
+        /// Decodes data in plain Base58, without any checksum.
+        /// </summary>
+        /// <param name="data">Data to be decoded</param>
+        /// <returns>Returns decoded data if valid; throws FormatException if invalid</returns>
+        public static byte[] DecodePlain9(string data)
+        {
+            BigInteger result;
+            {
+                result = BigInteger.Zero;
+
+                foreach (var c in data)
+                {
+                    var digit = ALPHABET_DIC.ContainsKey(c) ? ALPHABET_DIC[c] : -1;
+                    if (digit == -1)
+                    {
+                        throw new FormatException(string.Format("Invalid Base58 character `{0}`", c));
+                    }
+
+                    result = result * Base58BI + digit;
+                }
+            }
+
+            // Faster than TakeWhile
+            int prefixZeroCount;
+            for (prefixZeroCount = 0;
+                (prefixZeroCount < data.Length) && (data[prefixZeroCount] == '1');
+                prefixZeroCount++)
+            {
+            }
+
+            var resultReversed = result
+                .ToByteArray()
+                .Reverse()
+                .ToArray();
+            int firstNonZero;
+            for (firstNonZero = 0;
+                (firstNonZero < resultReversed.Length) && (resultReversed[firstNonZero] == 0);
+                firstNonZero++)
+            {
+            }
+
+            var revValueLength = resultReversed.Length - firstNonZero;
+            var realOutput = new byte[prefixZeroCount + revValueLength];
+            Array.Copy(resultReversed, firstNonZero, realOutput, prefixZeroCount, revValueLength);
+
+            return realOutput;
+        }
+
+        /// <summary>
+        /// Decodes data in plain Base58, without any checksum.
+        /// </summary>
+        /// <param name="data">Data to be decoded</param>
+        /// <returns>Returns decoded data if valid; throws FormatException if invalid</returns>
+        public static byte[] DecodePlain10(string data)
+        {
+            BigInteger result;
+            {
+                result = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                var reversedBytes = Enumerable
+                    .Range(0, data.Length)
+                    .Select(t => data[t])
+                    .Reverse();
+
+                foreach (var c in reversedBytes)
+                {
+                    var digit = ALPHABET_DIC[c];
+                    result += digit * offset;
+                    offset *= 58;
+                }
+            }
+
+            var prefixZeroCount = data
+                .TakeWhile(c => c == '1')
+                .Count();
+
+            var withoutPrefix = result
+                .ToByteArray()
+                .Reverse()
+                .SkipWhile(t => t == 0);
+
+            return Enumerable
+                .Repeat((byte) 0, prefixZeroCount)
+                .Concat(withoutPrefix)
+                .ToArray();
+        }
+
+        #endregion
 
         #endregion
 

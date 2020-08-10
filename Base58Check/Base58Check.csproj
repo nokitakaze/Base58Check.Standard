@@ -19,4 +19,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Old" />
+  </ItemGroup>
+
 </Project>
