@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace NokitaKaze.Base58Check
 {
@@ -22,6 +23,7 @@ namespace NokitaKaze.Base58Check
         public const string ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
         public static readonly BigInteger Base58BI = new BigInteger(58);
+        public static readonly BigInteger Number256 = new BigInteger(256);
         private static readonly BigInteger[] Numbers;
 
         private static readonly Dictionary<Base58DataType, IReadOnlyCollection<byte>> DataPrefixes =
@@ -74,12 +76,12 @@ namespace NokitaKaze.Base58Check
             {
                 inputInteger = BigInteger.Zero;
                 var offset = BigInteger.One;
-                var num256 = new BigInteger(256);
+
 
                 foreach (var t in input.Reverse().ToArray())
                 {
                     inputInteger += t * offset;
-                    offset *= num256;
+                    offset *= Number256;
                 }
             }
 
@@ -145,7 +147,7 @@ namespace NokitaKaze.Base58Check
                 .ToArray();
         }
 
-        #region add
+        #region Additional Decode variants
 
         /// <summary>
         /// Decodes data in plain Base58, without any checksum.
@@ -536,6 +538,379 @@ namespace NokitaKaze.Base58Check
                 .Repeat((byte) 0, prefixZeroCount)
                 .Concat(withoutPrefix)
                 .ToArray();
+        }
+
+        #endregion
+
+        #region Additional Encode variants
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew1(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                foreach (var t in input.Reverse().ToArray())
+                {
+                    inputInteger += t * offset;
+                    offset *= Number256;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % Base58BI);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= Base58BI;
+            }
+
+            int prefixZeroCount = 0;
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                prefixZeroCount++;
+            }
+
+            return "".PadLeft(prefixZeroCount, '1') + result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew1a_Big_Big(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                foreach (var t in input.Reverse())
+                {
+                    inputInteger += t * offset;
+                    offset *= Number256;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % Base58BI);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= Base58BI;
+            }
+
+            int prefixZeroCount = 0;
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                prefixZeroCount++;
+            }
+
+            return "".PadLeft(prefixZeroCount, '1') + result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew1a_Big_Scalar(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                foreach (var t in input.Reverse())
+                {
+                    inputInteger += t * offset;
+                    offset *= Number256;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % 58);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= 58;
+            }
+
+            int prefixZeroCount = 0;
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                prefixZeroCount++;
+            }
+
+            return "".PadLeft(prefixZeroCount, '1') + result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew1a_Scalar_Big(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                foreach (var t in input.Reverse())
+                {
+                    inputInteger += t * offset;
+                    offset *= 256;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % Base58BI);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= Base58BI;
+            }
+
+            int prefixZeroCount = 0;
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                prefixZeroCount++;
+            }
+
+            return "".PadLeft(prefixZeroCount, '1') + result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew1a_Scalar_Scalar(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                foreach (var t in input.Reverse())
+                {
+                    inputInteger += t * offset;
+                    offset *= 256;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % 58);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= 58;
+            }
+
+            int prefixZeroCount = 0;
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                prefixZeroCount++;
+            }
+
+            return "".PadLeft(prefixZeroCount, '1') + result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew1a_Big_Big_StringBuilder(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                foreach (var t in input.Reverse())
+                {
+                    inputInteger += t * offset;
+                    offset *= Number256;
+                }
+            }
+
+            var result = new StringBuilder();
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % Base58BI);
+                result.Append(ALPHABET[charOffset]);
+                inputInteger /= Base58BI;
+            }
+
+            int prefixZeroCount = 0;
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                prefixZeroCount++;
+            }
+
+            return "".PadLeft(prefixZeroCount, '1') + string.Concat(result.ToString().Reverse());
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew1a_Big_Scalar_StringBuilder(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                foreach (var t in input.Reverse())
+                {
+                    inputInteger += t * offset;
+                    offset *= Number256;
+                }
+            }
+
+            var result = new StringBuilder();
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % 58);
+                result.Append(ALPHABET[charOffset]);
+                inputInteger /= 58;
+            }
+
+            int prefixZeroCount = 0;
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                prefixZeroCount++;
+            }
+
+            return "".PadLeft(prefixZeroCount, '1') + string.Concat(result.ToString().Reverse());
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew1a_Scalar_Big_StringBuilder(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                foreach (var t in input.Reverse())
+                {
+                    inputInteger += t * offset;
+                    offset *= 256;
+                }
+            }
+
+            var result = new StringBuilder();
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % Base58BI);
+                result.Append(ALPHABET[charOffset]);
+                inputInteger /= Base58BI;
+            }
+
+            int prefixZeroCount = 0;
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                prefixZeroCount++;
+            }
+
+            return "".PadLeft(prefixZeroCount, '1') + string.Concat(result.ToString().Reverse());
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew1a_Scalar_Scalar_StringBuilder(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                foreach (var t in input.Reverse())
+                {
+                    inputInteger += t * offset;
+                    offset *= 256;
+                }
+            }
+
+            var result = new StringBuilder();
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % 58);
+                result.Append(ALPHABET[charOffset]);
+                inputInteger /= 58;
+            }
+
+            int prefixZeroCount = 0;
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                prefixZeroCount++;
+            }
+
+            return "".PadLeft(prefixZeroCount, '1') + string.Concat(result.ToString().Reverse());
         }
 
         #endregion

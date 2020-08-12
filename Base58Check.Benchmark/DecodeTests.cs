@@ -32,6 +32,8 @@ namespace Base58Check.Benchmark
                 .ToArray();
         }
 
+        /*
+
         [Benchmark]
         public void DecodePlain_AdamCaudill()
         {
@@ -112,6 +114,8 @@ namespace Base58Check.Benchmark
                 NokitaKaze.Base58Check.Base58CheckEncoding.DecodePlain8(data);
             }
         }
+        
+        */
 
         [Benchmark]
         public void DecodePlain_New9()
@@ -122,6 +126,7 @@ namespace Base58Check.Benchmark
             }
         }
 
+        /*
         [Benchmark]
         public void DecodePlain_New10()
         {
@@ -130,5 +135,6 @@ namespace Base58Check.Benchmark
                 NokitaKaze.Base58Check.Base58CheckEncoding.DecodePlain10(data);
             }
         }
+        */
     }
 }
