@@ -22,7 +22,7 @@ namespace NokitaKaze.Base58Check
         public const string ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
         public static readonly BigInteger Base58BI = new BigInteger(58);
-        // private static readonly BigInteger[] Numbers;
+        public static readonly BigInteger Number256 = new BigInteger(256);
 
         private static readonly Dictionary<Base58DataType, IReadOnlyCollection<byte>> DataPrefixes =
             new Dictionary<Base58DataType, IReadOnlyCollection<byte>>()
@@ -46,13 +46,6 @@ namespace NokitaKaze.Base58Check
 
         static Base58CheckEncoding()
         {
-            /*
-            Numbers = Enumerable
-                .Range(0, 58)
-                .Select(t => new BigInteger(t))
-                .ToArray();
-            */
-
             ALPHABET_DIC = Enumerable
                 .Range(0, ALPHABET.Length)
                 .ToDictionary(t => ALPHABET[t], t => t);
@@ -70,13 +63,10 @@ namespace NokitaKaze.Base58Check
             BigInteger inputInteger;
             {
                 inputInteger = BigInteger.Zero;
-                var offset = BigInteger.One;
-                var num256 = new BigInteger(256);
-
-                foreach (var t in input.Reverse().ToArray())
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (var t in input)
                 {
-                    inputInteger += t * offset;
-                    offset *= num256;
+                    inputInteger = inputInteger * Number256 + t;
                 }
             }
 
@@ -88,11 +78,18 @@ namespace NokitaKaze.Base58Check
                 inputInteger /= Base58BI;
             }
 
-            int prefixZeroCount = input
-                .TakeWhile(t => t == 0)
-                .Count();
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
 
-            return "".PadLeft(prefixZeroCount, '1') + result;
+                result = "1" + result;
+            }
+
+            return result;
         }
 
         /// <summary>
