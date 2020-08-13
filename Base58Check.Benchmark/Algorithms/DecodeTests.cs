@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
 
-namespace Base58Check.Benchmark
+namespace Base58Check.Benchmark.Algorithms
 {
     public class DecodeTests
     {

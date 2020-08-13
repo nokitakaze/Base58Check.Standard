@@ -3,7 +3,7 @@ using System.Linq;
 using BenchmarkDotNet.Attributes;
 using NokitaKaze.Base58Check;
 
-namespace Base58Check.Benchmark
+namespace Base58Check.Benchmark.Algorithms
 {
     public class EncodeTests
     {

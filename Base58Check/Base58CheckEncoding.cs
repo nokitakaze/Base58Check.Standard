@@ -75,13 +75,10 @@ namespace NokitaKaze.Base58Check
             BigInteger inputInteger;
             {
                 inputInteger = BigInteger.Zero;
-                var offset = BigInteger.One;
-
-
-                foreach (var t in input.Reverse().ToArray())
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (var t in input)
                 {
-                    inputInteger += t * offset;
-                    offset *= Number256;
+                    inputInteger = inputInteger * Number256 + t;
                 }
             }
 
@@ -93,11 +90,18 @@ namespace NokitaKaze.Base58Check
                 inputInteger /= Base58BI;
             }
 
-            int prefixZeroCount = input
-                .TakeWhile(t => t == 0)
-                .Count();
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
 
-            return "".PadLeft(prefixZeroCount, '1') + result;
+                result = "1" + result;
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -110,41 +114,43 @@ namespace NokitaKaze.Base58Check
             BigInteger result;
             {
                 result = BigInteger.Zero;
-                var offset = BigInteger.One;
 
-                var reversedBytes = Enumerable
-                    .Range(0, data.Length)
-                    .Select(t => data.Substring(t, 1))
-                    .Reverse()
-                    .ToArray();
-
-                foreach (var c in reversedBytes)
+                foreach (var c in data)
                 {
-                    var digit = ALPHABET.IndexOf(c, StringComparison.Ordinal);
+                    var digit = ALPHABET_DIC.ContainsKey(c) ? ALPHABET_DIC[c] : -1;
                     if (digit == -1)
                     {
                         throw new FormatException(string.Format("Invalid Base58 character `{0}`", c));
                     }
 
-                    result += Numbers[digit] * offset;
-                    offset *= Base58BI;
+                    result = result * Base58BI + digit;
                 }
             }
 
-            var prefixZeroCount = data
-                .TakeWhile(c => c == '1')
-                .Count();
+            // Faster than TakeWhile
+            int prefixZeroCount;
+            for (prefixZeroCount = 0;
+                (prefixZeroCount < data.Length) && (data[prefixZeroCount] == '1');
+                prefixZeroCount++)
+            {
+            }
 
-            var withoutPrefix = result
+            var resultReversed = result
                 .ToByteArray()
                 .Reverse()
-                .SkipWhile(t => t == 0)
                 .ToArray();
+            int firstNonZero;
+            for (firstNonZero = 0;
+                (firstNonZero < resultReversed.Length) && (resultReversed[firstNonZero] == 0);
+                firstNonZero++)
+            {
+            }
 
-            return Enumerable
-                .Repeat((byte) 0, prefixZeroCount)
-                .Concat(withoutPrefix)
-                .ToArray();
+            var revValueLength = resultReversed.Length - firstNonZero;
+            var realOutput = new byte[prefixZeroCount + revValueLength];
+            Array.Copy(resultReversed, firstNonZero, realOutput, prefixZeroCount, revValueLength);
+
+            return realOutput;
         }
 
         #region Additional Decode variants

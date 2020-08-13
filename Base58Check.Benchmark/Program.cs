@@ -7,13 +7,14 @@ namespace Base58Check.Benchmark
     {
         static void Main()
         {
-            // var summaryDecode = BenchmarkRunner.Run<DecodeTests>();
-            var summaryEncode = BenchmarkRunner.Run<EncodeTests>();
+            // var summaryDecode = BenchmarkRunner.Run<Base58Check.Benchmark.Algorithms.DecodeTests>();
+            // var summaryEncode = BenchmarkRunner.Run<Base58Check.Benchmark.Algorithms.EncodeTests>();
+            var summaryMain = BenchmarkRunner.Run<Base58Check.Benchmark.Main.MainTests>();
 
             Console.WriteLine("==================================");
             Console.WriteLine("==================================");
             Console.WriteLine("==================================");
-            Console.WriteLine(summaryEncode);
+            Console.WriteLine(summaryMain);
         }
     }
 }
