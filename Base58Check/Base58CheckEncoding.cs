@@ -913,6 +913,400 @@ namespace NokitaKaze.Base58Check
             return "".PadLeft(prefixZeroCount, '1') + string.Concat(result.ToString().Reverse());
         }
 
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew2a(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                foreach (var t in input.Reverse().ToArray())
+                {
+                    inputInteger += t * offset;
+                    offset *= Number256;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % Base58BI);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= Base58BI;
+            }
+
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                result = "1" + result;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew2a_NoToArray(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                var offset = BigInteger.One;
+
+                foreach (var t in input.Reverse())
+                {
+                    inputInteger += t * offset;
+                    offset *= Number256;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % Base58BI);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= Base58BI;
+            }
+
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                result = "1" + result;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew2a_NoReverse_Big_Big_Big(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (var t in input)
+                {
+                    inputInteger = inputInteger * Number256 + t;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % Base58BI);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= Base58BI;
+            }
+
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                result = "1" + result;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew2a_NoReverse_Big_Big_Scalar(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (var t in input)
+                {
+                    inputInteger = inputInteger * Number256 + t;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % Base58BI);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= 58;
+            }
+
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                result = "1" + result;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew2a_NoReverse_Big_Scalar_Big(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (var t in input)
+                {
+                    inputInteger = inputInteger * Number256 + t;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % 58);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= Base58BI;
+            }
+
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                result = "1" + result;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew2a_NoReverse_Big_Scalar_Scalar(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (var t in input)
+                {
+                    inputInteger = inputInteger * Number256 + t;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % 58);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= 58;
+            }
+
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                result = "1" + result;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew2a_NoReverse_Scalar_Big_Big(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (var t in input)
+                {
+                    inputInteger = inputInteger * 256 + t;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % Base58BI);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= Base58BI;
+            }
+
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                result = "1" + result;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew2a_NoReverse_Scalar_Big_Scalar(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (var t in input)
+                {
+                    inputInteger = inputInteger * 256 + t;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % Base58BI);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= 58;
+            }
+
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                result = "1" + result;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew2a_NoReverse_Scalar_Scalar_Big(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (var t in input)
+                {
+                    inputInteger = inputInteger * 256 + t;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % 58);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= Base58BI;
+            }
+
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                result = "1" + result;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Encodes data in plain Base58, without any checksum
+        /// </summary>
+        /// <param name="input">The data to be encoded</param>
+        /// <returns></returns>
+        public static string EncodeNew2a_NoReverse_Scalar_Scalar_Scalar(ICollection<byte> input)
+        {
+            BigInteger inputInteger;
+            {
+                inputInteger = BigInteger.Zero;
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (var t in input)
+                {
+                    inputInteger += inputInteger * 256 + t;
+                }
+            }
+
+            var result = "";
+            while (inputInteger > 0)
+            {
+                var charOffset = (int) (inputInteger % 58);
+                result = ALPHABET[charOffset] + result;
+                inputInteger /= 58;
+            }
+
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var t in input)
+            {
+                if (t != 0)
+                {
+                    break;
+                }
+
+                result = "1" + result;
+            }
+
+            return result;
+        }
+
         #endregion
 
         #endregion

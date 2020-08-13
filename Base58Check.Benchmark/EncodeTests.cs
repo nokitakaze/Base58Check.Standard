@@ -9,7 +9,9 @@ namespace Base58Check.Benchmark
     {
         // ReSharper disable once ConvertToConstant.Global
         // ReSharper disable once FieldCanBeMadeReadOnly.Global
-        [Params(1_000_000, 10_000_000)] public int N = 0; // 10_000,100_000, 
+        [Params(100_000, 1_000_000, 10_000_000)]
+        public int N = 0; // 10_000,100_000
+
         private byte[][] dataToEncode;
         private string[] dataToDecode;
 
@@ -42,6 +44,7 @@ namespace Base58Check.Benchmark
             }
         }
 
+        /*
         [Benchmark]
         public void Encode_FirstMy()
         {
@@ -59,7 +62,99 @@ namespace Base58Check.Benchmark
                 Base58CheckEncoding.EncodeNew1(data);
             }
         }
+        */
 
+        [Benchmark]
+        public void Encode_New2a()
+        {
+            foreach (var data in dataToEncode)
+            {
+                Base58CheckEncoding.EncodeNew2a(data);
+            }
+        }
+
+        [Benchmark]
+        public void Encode_New2a_NoToArray()
+        {
+            foreach (var data in dataToEncode)
+            {
+                Base58CheckEncoding.EncodeNew2a_NoToArray(data);
+            }
+        }
+
+        [Benchmark]
+        public void Encode_New2a_NoReverse_Big_Big_Big()
+        {
+            foreach (var data in dataToEncode)
+            {
+                Base58CheckEncoding.EncodeNew2a_NoReverse_Big_Big_Big(data);
+            }
+        }
+
+        [Benchmark]
+        public void Encode_New2a_NoReverse_Big_Big_Scalar()
+        {
+            foreach (var data in dataToEncode)
+            {
+                Base58CheckEncoding.EncodeNew2a_NoReverse_Big_Big_Scalar(data);
+            }
+        }
+
+        [Benchmark]
+        public void Encode_New2a_NoReverse_Big_Scalar_Big()
+        {
+            foreach (var data in dataToEncode)
+            {
+                Base58CheckEncoding.EncodeNew2a_NoReverse_Big_Scalar_Big(data);
+            }
+        }
+
+        [Benchmark]
+        public void Encode_New2a_NoReverse_Big_Scalar_Scalar()
+        {
+            foreach (var data in dataToEncode)
+            {
+                Base58CheckEncoding.EncodeNew2a_NoReverse_Big_Scalar_Scalar(data);
+            }
+        }
+
+        [Benchmark]
+        public void Encode_New2a_NoReverse_Scalar_Big_Big()
+        {
+            foreach (var data in dataToEncode)
+            {
+                Base58CheckEncoding.EncodeNew2a_NoReverse_Scalar_Big_Big(data);
+            }
+        }
+
+        [Benchmark]
+        public void Encode_New2a_NoReverse_Scalar_Big_Scalar()
+        {
+            foreach (var data in dataToEncode)
+            {
+                Base58CheckEncoding.EncodeNew2a_NoReverse_Scalar_Big_Scalar(data);
+            }
+        }
+
+        [Benchmark]
+        public void Encode_New2a_NoReverse_Scalar_Scalar_Big()
+        {
+            foreach (var data in dataToEncode)
+            {
+                Base58CheckEncoding.EncodeNew2a_NoReverse_Scalar_Scalar_Big(data);
+            }
+        }
+
+        [Benchmark]
+        public void Encode_New2a_NoReverse_Scalar_Scalar_Scalar()
+        {
+            foreach (var data in dataToEncode)
+            {
+                Base58CheckEncoding.EncodeNew2a_NoReverse_Scalar_Scalar_Scalar(data);
+            }
+        }
+
+        /*
         [Benchmark]
         public void Encode_New1a_Big_Big()
         {
@@ -131,5 +226,6 @@ namespace Base58Check.Benchmark
                 Base58CheckEncoding.EncodeNew1a_Scalar_Scalar_StringBuilder(data);
             }
         }
+        */
     }
 }
