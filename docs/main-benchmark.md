@@ -1,4 +1,36 @@
 # Main benchmark
+## Windows 10 & AMD Ryzen 9 3900X BOX 3.8 GHz (Matisse) 
+``` ini
+
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19041.450 (2004/?/20H1)
+AMD Ryzen 9 3900X, 1 CPU, 24 logical and 12 physical cores
+.NET Core SDK=3.1.401
+  [Host]     : .NET Core 3.1.7 (CoreCLR 4.700.20.36602, CoreFX 4.700.20.37001), X64 RyuJIT
+  DefaultJob : .NET Core 3.1.7 (CoreCLR 4.700.20.36602, CoreFX 4.700.20.37001), X64 RyuJIT
+
+
+```
+|      Method |      N | ByteLength |           Mean |       Error |      StdDev |
+|------------ |------- |----------- |---------------:|------------:|------------:|
+| **DecodePlain** |   **1000** |         **25** |       **3.019 ms** |   **0.0231 ms** |   **0.0205 ms** |
+| EncodePlain |   1000 |         25 |       5.330 ms |   0.0243 ms |   0.0216 ms |
+| **DecodePlain** |   **1000** |        **100** |      **15.888 ms** |   **0.0749 ms** |   **0.0701 ms** |
+| EncodePlain |   1000 |        100 |      43.628 ms |   0.1894 ms |   0.1772 ms |
+| **DecodePlain** |   **1000** |       **1024** |     **607.207 ms** |   **2.4616 ms** |   **1.9219 ms** |
+| EncodePlain |   1000 |       1024 |   3,192.719 ms |   5.7005 ms |   4.7602 ms |
+| **DecodePlain** |  **10000** |         **25** |      **31.321 ms** |   **0.2663 ms** |   **0.2491 ms** |
+| EncodePlain |  10000 |         25 |      53.570 ms |   0.2575 ms |   0.2283 ms |
+| **DecodePlain** |  **10000** |        **100** |     **165.616 ms** |   **0.5398 ms** |   **0.4508 ms** |
+| EncodePlain |  10000 |        100 |     437.195 ms |   2.6645 ms |   2.3620 ms |
+| **DecodePlain** |  **10000** |       **1024** |   **6,026.756 ms** |  **33.2982 ms** |  **29.5179 ms** |
+| EncodePlain |  10000 |       1024 |  31,763.862 ms |  23.1114 ms |  20.4877 ms |
+| **DecodePlain** | **100000** |         **25** |     **312.623 ms** |   **1.4673 ms** |   **1.3007 ms** |
+| EncodePlain | 100000 |         25 |     539.761 ms |   2.5686 ms |   2.2770 ms |
+| **DecodePlain** | **100000** |        **100** |   **1,617.721 ms** |   **7.0742 ms** |   **6.6172 ms** |
+| EncodePlain | 100000 |        100 |   4,336.208 ms |   9.1414 ms |   8.5509 ms |
+| **DecodePlain** | **100000** |       **1024** |  **59,624.377 ms** |  **66.5021 ms** |  **58.9524 ms** |
+| EncodePlain | 100000 |       1024 | 318,303.823 ms | 228.4905 ms | 190.7999 ms |
+
 ## Windows 10 & Intel Core i7-6700K CPU 4.00GHz (Skylake)
 ``` ini
 
