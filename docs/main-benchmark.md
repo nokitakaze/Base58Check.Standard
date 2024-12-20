@@ -1,5 +1,137 @@
 # Main benchmark
-## Windows 10 & AMD Ryzen 9 3900X BOX 3.8 GHz (Matisse) 
+## Windows 10 & AMD Ryzen 9 7950X 4.5 GHz (Raphael) (v0.4.3)
+``` ini
+
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19045
+AMD Ryzen 9 7950X, 1 CPU, 32 logical and 16 physical cores
+.NET Core SDK=8.0.404
+  [Host]     : .NET Core 8.0.11 (CoreCLR 8.0.1124.51707, CoreFX 8.0.1124.51707), X64 RyuJIT
+  DefaultJob : .NET Core 8.0.11 (CoreCLR 8.0.1124.51707, CoreFX 8.0.1124.51707), X64 RyuJIT
+
+
+```
+|      Method |      N | ByteLength |           Mean |       Error |      StdDev |
+|------------ |------- |----------- |---------------:|------------:|------------:|
+| **DecodePlain** |   **1000** |         **25** |       **1.021 ms** |   **0.0039 ms** |   **0.0036 ms** |
+| EncodePlain |   1000 |         25 |       1.810 ms |   0.0096 ms |   0.0090 ms |
+| **DecodePlain** |   **1000** |        **100** |       **5.321 ms** |   **0.0187 ms** |   **0.0156 ms** |
+| EncodePlain |   1000 |        100 |      15.193 ms |   0.0755 ms |   0.0631 ms |
+| **DecodePlain** |   **1000** |       **1024** |     **197.252 ms** |   **1.7391 ms** |   **1.6268 ms** |
+| EncodePlain |   1000 |       1024 |   1,342.195 ms |   5.2312 ms |   4.8933 ms |
+| **DecodePlain** |  **10000** |         **25** |      **10.057 ms** |   **0.0925 ms** |   **0.0865 ms** |
+| EncodePlain |  10000 |         25 |      18.008 ms |   0.0573 ms |   0.0536 ms |
+| **DecodePlain** |  **10000** |        **100** |      **53.721 ms** |   **0.1780 ms** |   **0.1665 ms** |
+| EncodePlain |  10000 |        100 |     151.616 ms |   0.9402 ms |   0.8794 ms |
+| **DecodePlain** |  **10000** |       **1024** |   **1,999.590 ms** |  **11.4609 ms** |  **10.7205 ms** |
+| EncodePlain |  10000 |       1024 |  13,335.758 ms |  50.2213 ms |  46.9770 ms |
+| **DecodePlain** | **100000** |         **25** |     **101.961 ms** |   **0.3904 ms** |   **0.3260 ms** |
+| EncodePlain | 100000 |         25 |     183.789 ms |   2.3378 ms |   2.1868 ms |
+| **DecodePlain** | **100000** |        **100** |     **530.640 ms** |   **2.0418 ms** |   **1.5941 ms** |
+| EncodePlain | 100000 |        100 |   1,532.633 ms |   9.2513 ms |   8.6536 ms |
+| **DecodePlain** | **100000** |       **1024** |  **19,662.650 ms** |  **19.8876 ms** |  **18.6029 ms** |
+| EncodePlain | 100000 |       1024 | 133,207.738 ms | 243.7186 ms | 227.9745 ms |
+
+
+## Windows 10 & AMD Ryzen 5 7535HS 3.3 GHz (Rembrandt R) (v0.4.3)
+``` ini
+
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19045
+AMD Ryzen 5 7535HS with Radeon Graphics, 1 CPU, 12 logical and 6 physical cores
+.NET Core SDK=8.0.404
+  [Host]     : .NET Core 8.0.11 (CoreCLR 8.0.1124.51707, CoreFX 8.0.1124.51707), X64 RyuJIT
+  DefaultJob : .NET Core 8.0.11 (CoreCLR 8.0.1124.51707, CoreFX 8.0.1124.51707), X64 RyuJIT
+
+
+```
+|      Method |      N | ByteLength |           Mean |       Error |      StdDev |
+|------------ |------- |----------- |---------------:|------------:|------------:|
+| **DecodePlain** |   **1000** |         **25** |       **1.453 ms** |   **0.0282 ms** |   **0.0463 ms** |
+| EncodePlain |   1000 |         25 |       2.775 ms |   0.0552 ms |   0.0774 ms |
+| **DecodePlain** |   **1000** |        **100** |       **7.785 ms** |   **0.1294 ms** |   **0.1211 ms** |
+| EncodePlain |   1000 |        100 |      23.464 ms |   0.4636 ms |   0.6345 ms |
+| **DecodePlain** |   **1000** |       **1024** |     **268.729 ms** |   **5.3649 ms** |  **12.2187 ms** |
+| EncodePlain |   1000 |       1024 |   1,680.330 ms |  32.5655 ms |  36.1965 ms |
+| **DecodePlain** |  **10000** |         **25** |      **13.383 ms** |   **0.2573 ms** |   **0.2643 ms** |
+| EncodePlain |  10000 |         25 |      26.254 ms |   0.5126 ms |   0.5485 ms |
+| **DecodePlain** |  **10000** |        **100** |      **70.810 ms** |   **1.3688 ms** |   **1.5214 ms** |
+| EncodePlain |  10000 |        100 |     220.008 ms |   4.3025 ms |   4.2256 ms |
+| **DecodePlain** |  **10000** |       **1024** |   **2,509.196 ms** |  **17.7920 ms** |  **16.6426 ms** |
+| EncodePlain |  10000 |       1024 |  16,597.741 ms | 169.3088 ms | 158.3716 ms |
+| **DecodePlain** | **100000** |         **25** |     **132.307 ms** |   **1.3890 ms** |   **1.2993 ms** |
+| EncodePlain | 100000 |         25 |     261.713 ms |   5.0116 ms |   5.9660 ms |
+| **DecodePlain** | **100000** |        **100** |     **688.827 ms** |   **6.2867 ms** |   **5.8806 ms** |
+| EncodePlain | 100000 |        100 |   2,160.717 ms |   6.7082 ms |   5.9467 ms |
+| **DecodePlain** | **100000** |       **1024** |  **25,337.582 ms** |  **61.2502 ms** |  **54.2967 ms** |
+| EncodePlain | 100000 |       1024 | 165,460.280 ms | 278.8848 ms | 260.8691 ms |
+
+
+## Windows 10 & Intel Core i7-10875H CPU 2.30GHz (v0.4.3)
+``` ini
+
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19045
+Intel Core i7-10875H CPU 2.30GHz, 1 CPU, 16 logical and 8 physical cores
+.NET Core SDK=8.0.404
+  [Host]     : .NET Core 8.0.11 (CoreCLR 8.0.1124.51707, CoreFX 8.0.1124.51707), X64 RyuJIT
+  DefaultJob : .NET Core 8.0.11 (CoreCLR 8.0.1124.51707, CoreFX 8.0.1124.51707), X64 RyuJIT
+
+
+```
+|      Method |      N | ByteLength |           Mean |         Error |        StdDev |         Median |
+|------------ |------- |----------- |---------------:|--------------:|--------------:|---------------:|
+| **DecodePlain** |   **1000** |         **25** |       **1.593 ms** |     **0.0302 ms** |     **0.0296 ms** |       **1.592 ms** |
+| EncodePlain |   1000 |         25 |       4.264 ms |     0.0843 ms |     0.2131 ms |       4.192 ms |
+| **DecodePlain** |   **1000** |        **100** |       **7.939 ms** |     **0.0661 ms** |     **0.0619 ms** |       **7.937 ms** |
+| EncodePlain |   1000 |        100 |      39.104 ms |     0.6184 ms |     0.5784 ms |      39.003 ms |
+| **DecodePlain** |   **1000** |       **1024** |     **301.836 ms** |     **5.9253 ms** |     **6.5859 ms** |     **299.669 ms** |
+| EncodePlain |   1000 |       1024 |   3,645.914 ms |    72.1097 ms |   116.4437 ms |   3,702.238 ms |
+| **DecodePlain** |  **10000** |         **25** |      **15.724 ms** |     **0.2618 ms** |     **0.3310 ms** |      **15.559 ms** |
+| EncodePlain |  10000 |         25 |      42.960 ms |     0.8275 ms |     1.0465 ms |      43.534 ms |
+| **DecodePlain** |  **10000** |        **100** |      **86.726 ms** |     **0.2636 ms** |     **0.2466 ms** |      **86.753 ms** |
+| EncodePlain |  10000 |        100 |     426.582 ms |     2.6840 ms |     2.5106 ms |     426.529 ms |
+| **DecodePlain** |  **10000** |       **1024** |   **2,934.862 ms** |     **5.4448 ms** |     **4.5467 ms** |   **2,933.847 ms** |
+| EncodePlain |  10000 |       1024 |  35,613.953 ms |   382.9817 ms |   319.8071 ms |  35,511.642 ms |
+| **DecodePlain** | **100000** |         **25** |     **154.093 ms** |     **1.7607 ms** |     **1.4702 ms** |     **154.197 ms** |
+| EncodePlain | 100000 |         25 |     438.151 ms |     5.5460 ms |     5.1877 ms |     439.479 ms |
+| **DecodePlain** | **100000** |        **100** |     **835.020 ms** |    **16.1660 ms** |    **18.6168 ms** |     **838.009 ms** |
+| EncodePlain | 100000 |        100 |   4,406.068 ms |    41.6285 ms |    38.9394 ms |   4,408.053 ms |
+| **DecodePlain** | **100000** |       **1024** |  **29,947.625 ms** |   **714.0369 ms** | **2,105.3540 ms** |  **28,585.261 ms** |
+| EncodePlain | 100000 |       1024 | 326,758.725 ms | 1,770.8276 ms | 1,656.4332 ms | 327,285.767 ms |
+
+
+## Windows 10 & AMD Ryzen 9 3900X BOX 3.8 GHz (Matisse) (v0.4.3)
+``` ini
+
+BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19045
+AMD Ryzen 9 3900X, 1 CPU, 24 logical and 12 physical cores
+.NET Core SDK=8.0.300
+  [Host]     : .NET Core 8.0.5 (CoreCLR 8.0.524.21615, CoreFX 8.0.524.21615), X64 RyuJIT
+  DefaultJob : .NET Core 8.0.5 (CoreCLR 8.0.524.21615, CoreFX 8.0.524.21615), X64 RyuJIT
+
+
+```
+|      Method |      N | ByteLength |           Mean |       Error |      StdDev |
+|------------ |------- |----------- |---------------:|------------:|------------:|
+| **DecodePlain** |   **1000** |         **25** |       **1.412 ms** |   **0.0080 ms** |   **0.0071 ms** |
+| EncodePlain |   1000 |         25 |       3.296 ms |   0.0174 ms |   0.0163 ms |
+| **DecodePlain** |   **1000** |        **100** |       **7.358 ms** |   **0.0479 ms** |   **0.0448 ms** |
+| EncodePlain |   1000 |        100 |      31.585 ms |   0.2200 ms |   0.2058 ms |
+| **DecodePlain** |   **1000** |       **1024** |     **285.613 ms** |   **1.8757 ms** |   **1.6628 ms** |
+| EncodePlain |   1000 |       1024 |   2,688.172 ms |  17.5966 ms |  16.4599 ms |
+| **DecodePlain** |  **10000** |         **25** |      **13.844 ms** |   **0.0305 ms** |   **0.0286 ms** |
+| EncodePlain |  10000 |         25 |      36.272 ms |   0.7159 ms |   0.9054 ms |
+| **DecodePlain** |  **10000** |        **100** |      **76.948 ms** |   **0.9134 ms** |   **0.8544 ms** |
+| EncodePlain |  10000 |        100 |     342.626 ms |   2.6902 ms |   2.5164 ms |
+| **DecodePlain** |  **10000** |       **1024** |   **2,837.929 ms** |   **4.4152 ms** |   **3.9140 ms** |
+| EncodePlain |  10000 |       1024 |  26,810.965 ms |  73.9151 ms |  69.1402 ms |
+| **DecodePlain** | **100000** |         **25** |     **138.509 ms** |   **0.9478 ms** |   **0.8866 ms** |
+| EncodePlain | 100000 |         25 |     337.303 ms |   1.6980 ms |   1.4179 ms |
+| **DecodePlain** | **100000** |        **100** |     **727.243 ms** |   **4.9930 ms** |   **4.6704 ms** |
+| EncodePlain | 100000 |        100 |   3,156.047 ms |  19.5064 ms |  17.2919 ms |
+| **DecodePlain** | **100000** |       **1024** |  **28,418.573 ms** |  **68.0749 ms** |  **63.6773 ms** |
+| EncodePlain | 100000 |       1024 | 268,150.667 ms | 139.7584 ms | 116.7046 ms |
+
+
+## Windows 10 & AMD Ryzen 9 3900X BOX 3.8 GHz (Matisse) (v0.4.2)
 ``` ini
 
 BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19041.450 (2004/?/20H1)
@@ -31,7 +163,7 @@ AMD Ryzen 9 3900X, 1 CPU, 24 logical and 12 physical cores
 | **DecodePlain** | **100000** |       **1024** |  **59,624.377 ms** |  **66.5021 ms** |  **58.9524 ms** |
 | EncodePlain | 100000 |       1024 | 318,303.823 ms | 228.4905 ms | 190.7999 ms |
 
-## Windows 10 & Intel Core i7-6700K CPU 4.00GHz (Skylake)
+## Windows 10 & Intel Core i7-6700K CPU 4.00GHz (Skylake) (v0.4.2)
 ``` ini
 
 BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19041.388 (2004/?/20H1)
@@ -63,7 +195,7 @@ Intel Core i7-6700K CPU 4.00GHz (Skylake), 1 CPU, 8 logical and 4 physical cores
 | **DecodePlain** | **100000** |       **1024** |  **51,857.771 ms** | **406.8083 ms** | **360.6249 ms** |
 | EncodePlain | 100000 |       1024 | 411,562.725 ms | 349.2002 ms | 291.5980 ms |
 
-## ubuntu 16.04 & Intel Core i7-2600 CPU 3.40GHz (Sandy Bridge)
+## ubuntu 16.04 & Intel Core i7-2600 CPU 3.40GHz (Sandy Bridge) (v0.4.2)
 ``` ini
 
 BenchmarkDotNet=v0.12.1, OS=ubuntu 16.04
@@ -95,7 +227,7 @@ Intel Core i7-2600 CPU 3.40GHz (Sandy Bridge), 1 CPU, 8 logical and 4 physical c
 | **DecodePlain** | **100000** |       **1024** |  **82,513.134 ms** | **878.9770 ms** | **779.1902 ms** |
 | EncodePlain | 100000 |       1024 | 507,848.824 ms | 894.0934 ms | 836.3355 ms |
 
-## Windows 10 & Intel Core i5-7400 CPU 3.00GHz (Kaby Lake)
+## Windows 10 & Intel Core i5-7400 CPU 3.00GHz (Kaby Lake) (v0.4.2)
 ``` ini
 
 BenchmarkDotNet=v0.12.1, OS=Windows 10.0.19041.388 (2004/?/20H1)
@@ -128,7 +260,7 @@ Intel Core i5-7400 CPU 3.00GHz (Kaby Lake), 1 CPU, 4 logical and 4 physical core
 | EncodePlain | 100000 |       1024 | 571,634.067 ms | 2,743.5567 ms | 2,566.3247 ms |
 
 
-## Windows 10 & Intel Core i5-7200U CPU 2.50GHz (Kaby Lake)
+## Windows 10 & Intel Core i5-7200U CPU 2.50GHz (Kaby Lake) (v0.4.2)
 ``` ini
 
 BenchmarkDotNet=v0.12.1, OS=Windows 10.0.18363.959 (1909/November2018Update/19H2)
