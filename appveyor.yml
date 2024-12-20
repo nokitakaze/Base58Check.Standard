@@ -1,12 +1,13 @@
-image: Visual Studio 2019
+image: Visual Studio 2022
 
 configuration:
   - Release
 
 before_build:
   - dotnet restore
+  - choco install opencover.portable
+  - choco install codecov
 
-test:
-  assemblies:
-    only:
-      - '**\*.Test.dll'
+test_script:
+  - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:test -filter:"+[NokitaKaze.Base58Check]* -[*.Test]*" -output:".\Base58Check_coverage.xml" -oldstyle
+  - codecov -f "Base58Check_coverage.xml"

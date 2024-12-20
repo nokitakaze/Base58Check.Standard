@@ -270,6 +270,17 @@ namespace NokitaKaze.Base58Check.Test
             Assert.Throws<FormatException>(() => Base58CheckEncoding.Decode("16UwLl9Risc3QfPqBUvKofHmBQ7wMtjvM"));
         }
 
+        [Fact]
+        public void CheckBrokenChecksum()
+        {
+            var bytes = Base58CheckEncoding.DecodePlain("16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM");
+            var pureByes = new byte[Base58CheckEncoding.CHECK_SUM_SIZE];
+            Array.Copy(pureByes, 0, bytes,
+                bytes.Length - Base58CheckEncoding.CHECK_SUM_SIZE, Base58CheckEncoding.CHECK_SUM_SIZE);
+            var brokenString = Base58CheckEncoding.EncodePlain(bytes);
+            Assert.Throws<FormatException>(() => Base58CheckEncoding.Decode(brokenString));
+        }
+
         public static IEnumerable<object[]> EncodeTypeTestData()
         {
             // ReSharper disable once UseObjectOrCollectionInitializer

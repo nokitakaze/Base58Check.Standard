@@ -105,8 +105,7 @@ namespace NokitaKaze.Base58Check
 
                 foreach (var c in data)
                 {
-                    var digit = ALPHABET_DIC.ContainsKey(c) ? ALPHABET_DIC[c] : -1;
-                    if (digit == -1)
+                    if (!ALPHABET_DIC.TryGetValue(c, out var digit))
                     {
                         throw new FormatException(string.Format("Invalid Base58 character `{0}`", c));
                     }

@@ -3,6 +3,7 @@ Base58Check
 [![NuGet version (NokitaKaze.Base58Check)](https://img.shields.io/nuget/v/NokitaKaze.Base58Check.svg?style=flat)](https://www.nuget.org/packages/NokitaKaze.Base58Check/)
 [![Build status](https://ci.appveyor.com/api/projects/status/k7vma8jm754qcdnk/branch/master?svg=true)](https://ci.appveyor.com/project/nokitakaze/base58check-standard/branch/master)
 [![Test status](https://img.shields.io/appveyor/tests/nokitakaze/base58check-standard.svg)](https://ci.appveyor.com/project/nokitakaze/base58check-standard/branch/master)
+[![codecov](https://codecov.io/gh/nokitakaze/Base58Check.Standard/branch/master/graph/badge.svg?token=RE56AR2GU0)](https://codecov.io/gh/nokitakaze/Base58Check.Standard)
 [![Downloads](https://img.shields.io/nuget/dt/NokitaKaze.Base58Check.svg)](https://www.nuget.org/packages/NokitaKaze.Base58Check)
 
 Base58Check is a C# implementation of [Base58 Checked Encoding](https://en.bitcoin.it/wiki/Base58Check_encoding).
